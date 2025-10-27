@@ -1,5 +1,4 @@
 package com.growloop.growloop_backend.authentication.Dto;
-
 import lombok.Data;
 
 @Data
@@ -10,5 +9,3 @@ public class UserUpdateRequest {
     private Double latitude;
     private Double longitude;
 }
-
-

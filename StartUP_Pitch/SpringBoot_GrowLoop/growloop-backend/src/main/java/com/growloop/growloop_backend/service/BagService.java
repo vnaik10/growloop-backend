@@ -2,6 +2,7 @@ package com.growloop.growloop_backend.service;
 import com.growloop.growloop_backend.authentication.Dto.BagCreateRequest;
 import com.growloop.growloop_backend.authentication.Dto.BagResponseDTO;
 import com.growloop.growloop_backend.entity.*;
+import com.growloop.growloop_backend.enumHelpers.BagPurpose;
 import com.growloop.growloop_backend.enumHelpers.BagStatus;
 import com.growloop.growloop_backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ public class BagService {
                 .status(BagStatus.OPEN)
                 .totalItems(0)
                 .pointsAwarded(0)
+                .purpose(request.getPurpose())
                 .deliveryCharge(50.0)
                 .build();
 
@@ -45,6 +47,16 @@ public class BagService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         List<Bag> bags = bagRepository.findByUserOrderByCreatedAtDesc(user);
+        return bags.stream()
+                .map(BagResponseDTO::fromBag)
+                .collect(Collectors.toList());
+    }
+
+    public List<BagResponseDTO> getUserBagsByPurpose(String firebaseUid, BagPurpose purpose) {
+        User user = userRepository.findByFirebaseUid(firebaseUid)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        List<Bag> bags = bagRepository.findByUserAndPurposeOrderByCreatedAtDesc(user, purpose);
         return bags.stream()
                 .map(BagResponseDTO::fromBag)
                 .collect(Collectors.toList());

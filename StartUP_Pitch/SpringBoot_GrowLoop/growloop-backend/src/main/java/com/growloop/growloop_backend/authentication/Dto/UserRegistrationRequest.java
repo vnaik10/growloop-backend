@@ -21,5 +21,3 @@ public class UserRegistrationRequest {
     private Double longitude;
 
 }
-
-

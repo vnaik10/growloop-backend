@@ -27,4 +27,3 @@ public class ItemCreateRequest {
     // For direct recycling (bypasses bag system)
     private Boolean isDirectRecycle = false;
 }
-

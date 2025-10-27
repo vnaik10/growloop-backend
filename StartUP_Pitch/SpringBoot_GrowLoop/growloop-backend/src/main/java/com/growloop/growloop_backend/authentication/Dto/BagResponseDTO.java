@@ -26,6 +26,8 @@ public class BagResponseDTO {
     private String pickupMessage;
     private String creatorName;
     private Long creatorId;
+    private String purpose;
+    private String purposeDisplayName;
 
     public static BagResponseDTO fromBag(Bag bag) {
         BagResponseDTO dto = new BagResponseDTO();
@@ -45,6 +47,8 @@ public class BagResponseDTO {
         dto.setPickupMessage(bag.getPickupEligibilityMessage());
         dto.setCreatorName(bag.getUser().getUserName());
         dto.setCreatorId(bag.getUser().getUserId());
+        dto.setPurpose(bag.getPurpose().name());
+        dto.setPurposeDisplayName(bag.getPurpose().getDisplayName());
         return dto;
     }
 }

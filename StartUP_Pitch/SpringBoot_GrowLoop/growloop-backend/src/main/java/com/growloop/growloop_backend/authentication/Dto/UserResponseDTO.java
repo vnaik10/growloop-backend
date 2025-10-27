@@ -32,5 +32,4 @@ public class UserResponseDTO {
         dto.setUpdatedAt(user.getUpdatedAt() != null ? user.getUpdatedAt().toString() : null);
         return dto;
     }
-
 }

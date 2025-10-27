@@ -2,6 +2,7 @@ package com.growloop.growloop_backend.repository;
 
 import com.growloop.growloop_backend.entity.Bag;
 import com.growloop.growloop_backend.entity.User;
+import com.growloop.growloop_backend.enumHelpers.BagPurpose;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -32,5 +33,9 @@ public interface BagRepository extends JpaRepository<Bag, Long> {
 
     // Check if shareable link already exists (for uniqueness)
     boolean existsBySharableLink(String sharableLink);
+
+    List<Bag> findByPurpose(BagPurpose purpose);
+
+    List<Bag> findByUserAndPurposeOrderByCreatedAtDesc(User user, BagPurpose purpose);
 }
 

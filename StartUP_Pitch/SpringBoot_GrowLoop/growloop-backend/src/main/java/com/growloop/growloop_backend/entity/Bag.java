@@ -1,6 +1,7 @@
 package com.growloop.growloop_backend.entity;
 
 
+import com.growloop.growloop_backend.enumHelpers.BagPurpose;
 import com.growloop.growloop_backend.enumHelpers.BagStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -70,6 +71,11 @@ public class Bag {
         return totalItems >= 5 && (status == BagStatus.OPEN || status == BagStatus.AWAITING_PICKUP);
     }
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "purpose", nullable = false)
+    @Builder.Default
+    private BagPurpose purpose = BagPurpose.RESALE;
+
     public boolean canSchedulePickup() {
         return status == BagStatus.OPEN && totalItems > 0;
     }
@@ -123,6 +129,14 @@ public class Bag {
     // Helper methods for UI/API
     public boolean canAddItems() {
         return status == BagStatus.OPEN;
+    }
+
+    public boolean isResaleBag() {
+        return BagPurpose.RESALE.equals(this.purpose);
+    }
+
+    public boolean isDonationBag() {
+        return BagPurpose.DONATION.equals(this.purpose);
     }
 
     public boolean isPendingPickup() {
