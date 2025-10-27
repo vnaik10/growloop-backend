@@ -23,8 +23,4 @@ public class ApiResponse<T> {
         response.setData(null);
         return response;
     }
-
-
-
-
 }

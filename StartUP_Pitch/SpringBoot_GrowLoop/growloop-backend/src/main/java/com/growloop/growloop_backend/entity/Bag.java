@@ -18,7 +18,8 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "bags")
+@Entity
+@Table(name = "bags")
 public class Bag {
 
     @Id
