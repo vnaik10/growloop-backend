@@ -12,6 +12,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Builder
 @Data
@@ -125,6 +126,22 @@ public class Bag {
 
     public boolean isPendingPickup() {
         return status == BagStatus.AWAITING_PICKUP;
+    }
+
+    @PrePersist
+    public void generateShareableLink() {
+        if (this.sharableLink == null || this.sharableLink.isEmpty()) {
+            this.sharableLink = generateUniqueToken();
+        }
+    }
+
+    private String generateUniqueToken() {
+        return UUID.randomUUID().toString().replace("-", "").substring(0, 8).toUpperCase();
+    }
+
+    // Method to get full shareable URL
+    public String getShareableUrl() {
+        return "https://growloop.app/share/" + this.sharableLink;
     }
 
 
